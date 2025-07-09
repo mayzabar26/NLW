@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style/style.css">
+
+    <!--Fontes usadas no projeto-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -16,9 +21,34 @@
     <!--CONTEÚDO PRINCIPAL DA PÁGINA-->
     <main>
         <section>
-            <h2>Assistente de Meta</h2>
-            <p>Pergunte sobre estratégias, buid e ducas para seus jogos!</p>
-            <!--Vamos aplicar o background no CSS-->
+            <div>
+               <h2>Assistente de Meta</h2>
+                <p>Pergunte sobre estratégias, buid e dicas para seus jogos!</p>
+                <!--Vamos aplicar o background no CSS--> 
+
+                <!--INFO PARA USER COLOCAR-->
+                <form>
+                    <!--input para colocar a senha-->
+                    <input type="password" placeholder="Informe a API KEY do Gemini" required>
+
+                    <!--Seletor para escolher o tipo de jogo-->                    
+                    <select>
+                        <option value="">Selecione um jogo</option>
+                        <option value="valorant">Valorant</option>
+                        <option value="lol">League of Legends</option>
+                        <option value="csgo">CS:GO</option>
+                    </select>
+                   
+                    <!--input para user fazer a pergunta-->
+                    <input type="text" placeholder="Ex: Melhor build para ADC" required>
+                    <button>Perguntar</button>
+                </form>
+
+                <!--DIV PARA AI-->
+                <div id="aiResponse">
+                    <div class="response-content"></div>
+                </div>
+            </div>
         </section>
     </main>
 </body>
