@@ -13,21 +13,50 @@ const markdownToHTML = (text) => {
     return converter.makeHtml(text)
 }
 
-//2: CRIAR FUNÇÕES
-//2.1 Função: Perguntar AI
-// Chave api: AIzaSyD03L0-jQK0KWWXSpDYMHu0aaUhj-e3eEg (NÃO PODE SER COMPARTILHADA, APAGAR DEPOIS)
+//2.2: CRIAR FUNÇÕES
+//2.2.1 Função: Perguntar AI
 const perguntarAI = async (question, game, apiKey) => {
     const model = "gemini-2.5-flash"
     const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`
+    
+    //Variável com o modelo do prompt de resposta da AI
     const pergunta = `
-    Olha, eu tenho esse jogo lol, queria saber melhor build para Joyce Top.
+      ## Especialidade
+      Você é um especialista assistente de meta para o jogo ${game}
+
+      ## Tarefa
+      Você deve responder as perguntas do usuário com base no seu conhecimento do jogo, estratégias, build e dicas
+
+      ## Regras
+      - Se você não sabe a resposta, responda com 'Não sei' e não tente inventar uma resposta.
+      - Se a pergunta não está relacionada ao jogo, responda com 'Essa pergunta não está relacionada ao jogo'
+      - Considere a data atual ${new Date().toLocaleDateString()}
+      - Faça pesquisas atualizadas sobre o patch atual, baseado na data atual, para dar uma resposta coerente.
+      - Nunca responsda itens que vc não tenha certeza de que existe no patch atual.
+
+      ## Resposta
+      - Economize na resposta, seja direto e responda no máximo 500 caracteres
+      - Responda em markdown
+      - Não precisa fazer nenhuma saudação ou despedida, apenas responda o que o usuário está querendo.
+
+      ## Exemplo de resposta
+      pergunta do usuário: Melhor build rengar jungle
+      resposta: A build mais atual é: \n\n **Itens:**\n\n coloque os itens aqui.\n\n**Runas:**\n\nexemplo de runas\n\n
+      
+      ---
+      Aqui está a pergunta do usuário: ${question}
     `
 
-    //Esse é o JSON
+    //Esse é o JSON 
     const contents = [{
+        role: "user",
         parts: [{
             text: pergunta
         }]
+    }]
+
+    const tools = [{
+        google_search: {}
     }]
 
     //1º Chamada API
@@ -37,7 +66,8 @@ const perguntarAI = async (question, game, apiKey) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ //stringify é uma função do JSON que pega um objeto do JS e transforma em JSON
-            contents
+            contents,
+            tools
         })
     })
 
@@ -48,37 +78,32 @@ const perguntarAI = async (question, game, apiKey) => {
 }
 
 
-//2.2 Função: Enviar formulário
+//2.1 FUNÇÃO: ENVIAR FORMULÁRIO
 // - event para não atualizar form
 // - Pegar valores do form
 // - Condição para verificar se campos do form estão vazios
 // - Desabilitar butão "Perguntar"
 // - Manipular DOM: Mudar nome e criar classe
-// - Habilitar butão novamente usanfo TRY | CATCH | FINALLY
-
+// - Habilitar butão novamente usando TRY | CATCH | FINALLY
 const submitForm = async (event) => {
     event.preventDefault() //Não vai atualizar o formulário
 
-    //Pegando valores do form (API KEY, Selecionar o game, perguntar)
+    //2.1.1 Pegando valores do form (API KEY, Selecionar o game, perguntar)
     const apiKey = apiKeyInput.value 
     const game = gameSelect.value 
     const question = questionInput.value 
 
-
-    //Condição: Verifica se campos do form estão vazios,
-    //caso esteja, vai lançar msg de alerta. Caso não esteja, código continua
-    if(apiKey == "" || game == "" || question == "") { //Verifica se tem campos vazios no form
+    //2.1.2 Condição > Verifica se campos do form estão vazios,
+    if(apiKey == "" || game == "" || question == "") { 
         alert("Por favor, preencha todos os campos")
         return 
     }
 
-    //Desabilita botão depois que o form for enviado
+    //2.1.3 Desabilita botão depois que o form for enviado
     askButton.disabled = true
 
-    //Manipulação do DOM: 
-    //1: Mudando o texto do butão
-    //2: Criando uma classe "loading"
-    askButton.textContent = "Perguntando..." //Muda texto "PERGUNTAR" para "PERGUNTANDO..."
+    //2.1.4 Manipulação do DOM > Mudando o texto do butão | Criando uma classe "loading"
+    askButton.textContent = "Perguntando..." //Muda texto "PERGUNTAR" > "PERGUNTANDO..."
     askButton.classList.add("loading") //Cria uma classe .loading
 
     //Habilita butão que estava desabilitado
@@ -86,6 +111,7 @@ const submitForm = async (event) => {
     try {
         const text = await perguntarAI(question, game, apiKey)
         aiResponse.querySelector(".response-content").innerHTML = markdownToHTML(text)
+        aiResponse.classList.remove("hidden")
 
     //Se der problema o Catch pega
     } catch(error) {
@@ -98,6 +124,7 @@ const submitForm = async (event) => {
     }
 }
 
+//3 ADICIONAR EVENTO
 form.addEventListener("submit", submitForm)
 
 

@@ -1,10 +1,7 @@
 * {margin: 0; padding: 0; box-sizing: border-box;}
 
 body *, 
-:root {
-    font-family: "Inter";
-    line-height: 160%;
-}
+:root {font-family: "Inter"; line-height: 160%;}
 
 body{
     background-image: url("../assets/bg.jpg");
@@ -20,9 +17,7 @@ header {
     text-align: center;
 }
 
-header img {
-    width: 15rem;
-}
+header img {width: 15rem;}
 
 main {
     max-width: 36rem;
@@ -55,14 +50,8 @@ section > div {
     background-color: #2a2634;
 }
 
-section h2 {
-    letter-spacing:-0.47px;
-}
-
-section p {
-    letter-spacing: -0.18px;
-    color: #a1a1aa;
-}
+section h2 {letter-spacing:-0.47px;}
+section p {letter-spacing: -0.18px; color: #a1a1aa;}
 
 /*ANIMAÇÃO*/
 main section {
@@ -72,7 +61,6 @@ main section {
     animation-duration: 700ms;
     animation-fill-mode: forwards;
 }
-
 @keyframes appear {
     100%{
         opacity: 1;
@@ -132,11 +120,22 @@ button:disabled {
     color: black;
 }
 
-/*Animação de pulsar (respiro)*/
-.loading{
-    animation: pulse 1s infinite;
+/*Referente a resposta da AI*/
+#aiResponse {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 0.5rem;
+    padding: 1.25rem; /*Coloca a resposta para dentro da caixa*/
+    border-left: 6px solid #9572FC;
 }
 
+#aiResponse ul {padding-left: 1.5rem;}
+#aiResponse p {color: white;}
+
+/*Vai fazer desaparecer o espaço da resposta da AI*/
+.hidden {display: none;}
+
+/*Animação de pulsar (respiro)*/
+.loading{animation: pulse 1s infinite;}
 @keyframes pulse{
     50% {
         opacity: 0.5;
