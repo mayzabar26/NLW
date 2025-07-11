@@ -30,6 +30,18 @@ main {
     margin: 3rem auto;
 }
 
+form > select {
+    background-color: #9572FC;
+    color: #121214;
+    font-weight: 500;
+}
+
+form > select:hover{
+    cursor: pointer;
+    background-color: #121214;
+    color: white;
+}
+
 section{
     background-image: linear-gradient(90deg, #9572FC 0%, #43E7AD 50%, #E2D45C 100%);
     border-radius: 0.625rem;
@@ -68,19 +80,19 @@ main section {
     }
 }
 
-form {
+/*form {
     display: flex;
     flex-direction: column;
     gap: 0.85rem;
     margin: 1.25rem 0;
-}
+}*/
 
-/*form {
+form {
     display: flex;
     gap: 0.85rem;
     flex-wrap: wrap;
     margin: 1.25rem 0;
-}*/
+}
 
 input, select {
     all: unset; /*tirar tudo o que o navegador faz por padrão*/
@@ -89,4 +101,24 @@ input, select {
     padding: 0.675rem;
     font-size: 0.875rem;
     background-color: #00000066;
+}
+
+input {flex: 1;} 
+
+button {
+    width: 100%; /*Vai me dar um espaço grande para digitar*/
+    border: 0;
+    background-image: linear-gradient(90deg, #9572FC 0%, #43E7AD 50%, #E2D45C 100%);
+    padding: 0.675rem;
+    border-radius: 0.5rem;
+    font-weight: 650;
+    text-transform: uppercase;
+
+    transition: all 0.3s;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 1rem rgba(255, 248, 107, 0.2);
 }
